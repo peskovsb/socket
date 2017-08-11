@@ -30,18 +30,21 @@ var socket = io.connect('https://restapi.uremont.com:8890', {
             var show_img = '';
 
             var margin = '';
+            var label = ''
 
             if(token == result.userToken[0]){
-                margin = 'margin-left: 20px;';
+                margin = 'margin-left: 30%;';
+                label = '<span class="label label-success">from</span>';
             }else{
-                margin = 'margin-right: 20px;';
+                margin = 'margin-right: 30%;';
+                label = '<span class="label label-info">to</span>';
             }
             
-            if(image.length > 0){
+            if(image != null && image.length > 0){
             	var display_img = image[0];
             	show_img = '<img src="' + display_img[270] +'" width=100>';
             }
-            $('#first').after('<div style="'+margin+'" class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"><strong>'+result.messages[0].user_name+'</strong></h3> </div> <div class="panel-body"> '+result.messages[0].message + show_img +' </div> </div>');
+            $('#first').after('<div style="'+margin+'" class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title">'+label+' <strong>'+result.messages[0].user_name+'</strong></h3> </div> <div class="panel-body"> '+result.messages[0].message + show_img +' </div> </div>');
         });
 </script>
 </head>
