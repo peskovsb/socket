@@ -1,0 +1,61 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script   src="http://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="bootstrap.min.js"></script>
+
+<script>
+token = "y3P9fwWxViWRQTuq3uSDR-F7f6fobhGz";
+var socket = io.connect('https://restapi.uremont.com:8890', {
+            'force new connection': true,
+            'resource': 'socket',
+            'transports': ['websocket', 'xhr-polling', 'jsonp-polling'],
+            'query': "token=kD4oXOigPmNJm0WghIyzfh3fTpV09PUX"
+ });
+  
+        socket.on('notification', function (data) {
+            var result = JSON.parse(data);
+            console.log(result);
+            var image = result.messages[0].img;
+            var show_img = '';
+
+            var margin = '';
+
+            if(token == result.userToken[0]){
+                margin = 'margin-left: 20px;';
+            }else{
+                margin = 'margin-right: 20px;';
+            }
+            
+            if(image.length > 0){
+            	var display_img = image[0];
+            	show_img = '<img src="' + display_img[270] +'" width=100>';
+            }
+            $('#first').after('<div style="'+margin+'" class="panel panel-default"> <div class="panel-heading"> <h3 class="panel-title"><strong>'+result.messages[0].user_name+'</strong></h3> </div> <div class="panel-body"> '+result.messages[0].message + show_img +' </div> </div>');
+        });
+</script>
+</head>
+<body>
+	<div class="container">
+		<h2>SOCET IO TESTER STO</h2>
+		<div class="row">
+			<div class="col-xs-6">
+
+				<div id="first"></div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
